@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "qrencode.h"
-#include "qrcode_espi.h"
+#include "qrcode_espi_extended.h"
 
 
 QRcode_eSPI::QRcode_eSPI(TFT_eSPI *display) {
