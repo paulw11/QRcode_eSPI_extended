@@ -46,7 +46,7 @@ Creating a QRcode is just as simple as:
 
 #include <SPI.h>
 #include <TFT_eSPI.h>
-#include <qrcode_espi.h>
+#include <qrcode_espi_extended.h>
 
 TFT_eSPI display = TFT_eSPI();
 QRcode_eSPI qrcode (&display);
