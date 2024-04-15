@@ -8,11 +8,14 @@ QRcode_eSPI::QRcode_eSPI(TFT_eSPI *display) {
 }
 
 
-void QRcode_eSPI::init() {
+void QRcode_eSPI::init(int drawColor = TFT_BLACK, int backgroundColor = TFT_WHITE, int top = 0, int left = 0, int bottom = 0, int right = 0) {
     //display->init();
-    this->screenwidth = display->width();
-    this->screenheight = display->height();
-    display->fillScreen(TFT_WHITE);
+    this->top = top;
+    this->left = left;
+    this->screenwidth = right <= left ? display->width() : right - left;
+     this->screenheight = bottom <= top ? display->height() : bottom - top;
+    this->drawColor = drawColor;
+    this->backgroundColor = backgroundColor;
     int min = screenwidth;
     if (screenheight<screenwidth)
         min = screenheight;
@@ -28,7 +31,7 @@ void QRcode_eSPI::create(String message) {
 }
 
 void QRcode_eSPI::screenwhite() {
-    display->fillScreen(TFT_WHITE);
+    display->fillScreen(backgroundColor);
 }
 
 void QRcode_eSPI::screenupdate() {
@@ -37,12 +40,14 @@ void QRcode_eSPI::screenupdate() {
 
 void QRcode_eSPI::drawPixel(int x, int y, int color) {
     if(color==1) {
-        color = TFT_BLACK;
+        color = drawColor;
     } else {
-        color = TFT_WHITE;
+        color = backgroundColor;
     }
-    display->drawPixel(x,y,color);
+    int xpos = x+left;
+    int ypos = y+top;
+    display->drawPixel(xpos,ypos,color);
     if (this->multiply>1) {
-        display->fillRect(x,y,multiply,multiply,color);
+        display->fillRect(xpos,ypos,multiply,multiply,color);
     }
 }
